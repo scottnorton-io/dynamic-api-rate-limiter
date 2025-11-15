@@ -1,16 +1,39 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "dynamic-api-rate-limiter"
 version = "0.1.0"
-description = "Dynamic, 429-aware API rate limiter with per-API configurations."
+description = "Dynamic, 429-aware API rate limiter with per-API configurations and a self-tuning AIMD algorithm."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
 authors = [
   { name = "Scott Norton" }
+]
+keywords = [
+  "rate-limiter",
+  "api",
+  "throttling",
+  "notion",
+  "vanta",
+  "fieldguide",
+  "requests",
+  "http",
+]
+classifiers = [
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Developers",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Software Development :: Libraries",
 ]
 dependencies = [
   "requests>=2.31.0",
@@ -19,6 +42,15 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/scottnorton-io/dynamic-api-rate-limiter"
 Repository = "https://github.com/scottnorton-io/dynamic-api-rate-limiter"
+Issues = "https://github.com/scottnorton-io/dynamic-api-rate-limiter/issues"
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0.0",
+  "ruff>=0.5.0",
+  "build>=1.0.0",
+  "twine>=5.0.0",
+]
 
 [tool.setuptools]
 packages = ["api_ratelimiter"]
