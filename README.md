@@ -263,3 +263,20 @@ MIT License © 2025 Scott Norton
 Issues and pull requests are welcome.
 
 See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for details on setup, linting, and tests.
+
+
+## 📖 Documentation Site
+
+Once GitHub Pages is enabled for this repository, the MkDocs documentation
+will be available at:
+
+- https://scottnorton-io.github.io/dynamic-api-rate-limiter/
+
+You can also build and serve the docs locally:
+
+```bash
+pip install mkdocs
+mkdocs serve
+```
+
+Then open http://127.0.0.1:8000/ in your browser.
