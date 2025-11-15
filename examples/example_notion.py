@@ -1,17 +1,19 @@
-"""
-Minimal Notion usage example.
-
-Set NOTION_TOKEN and PAGE_ID before running this script.
-
-This example is intentionally simple and does not handle all Notion features.
-"""
+"""Example: Using the dynamic rate limiter with the Notion API."""
 
 import os
 
 from api_ratelimiter.clients import make_client_for
 
 
-def get_page(page_id: str, token: str):
+def main() -> None:
+    token = os.environ.get("NOTION_TOKEN")
+    page_id = os.environ.get("NOTION_PAGE_ID")
+
+    if not token or not page_id:
+        raise SystemExit(
+            "Please set NOTION_TOKEN and NOTION_PAGE_ID environment variables."
+        )
+
     notion = make_client_for("notion")
 
     headers = {
@@ -21,21 +23,10 @@ def get_page(page_id: str, token: str):
 
     resp = notion.request("GET", f"/pages/{page_id}", headers=headers)
     resp.raise_for_status()
-    return resp.json()
+    data = resp.json()
 
-
-def main():
-    token = os.environ.get("NOTION_TOKEN", "").strip()
-    page_id = os.environ.get("NOTION_PAGE_ID", "").strip()
-
-    if not token or not page_id:
-        raise SystemExit(
-            "Please set NOTION_TOKEN and NOTION_PAGE_ID environment variables."
-        )
-
-    data = get_page(page_id, token)
-    print("Page ID:", data.get("id"))
-    print("Archived:", data.get("archived"))
+    print("Fetched Notion page:")
+    print(data)
 
 
 if __name__ == "__main__":

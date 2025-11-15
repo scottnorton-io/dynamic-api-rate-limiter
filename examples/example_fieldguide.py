@@ -1,9 +1,7 @@
-"""
-Minimal Fieldguide usage example.
+"""Example: Using the dynamic rate limiter with the Fieldguide API.
 
-Set FIELDGUIDE_TOKEN before running this script.
-
-The endpoint used here is illustrative; adjust path/fields to match your account and API version.
+NOTE: This is a placeholder example. Adjust the base URL, endpoint,
+and authentication headers to match your actual Fieldguide usage.
 """
 
 import os
@@ -11,25 +9,25 @@ import os
 from api_ratelimiter.clients import make_client_for
 
 
-def list_engagements(token: str):
+def main() -> None:
+    token = os.environ.get("FIELDGUIDE_TOKEN")
+
+    if not token:
+        raise SystemExit("Please set FIELDGUIDE_TOKEN environment variable.")
+
     fg = make_client_for("fieldguide")
 
     headers = {
         "Authorization": f"Bearer {token}",
     }
 
-    resp = fg.request("GET", "/v1/engagements", headers=headers)
+    # Replace `/some-endpoint` with a real Fieldguide API path you use regularly.
+    resp = fg.request("GET", "/some-endpoint", headers=headers)
     resp.raise_for_status()
-    return resp.json()
+    data = resp.json()
 
-
-def main():
-    token = os.environ.get("FIELDGUIDE_TOKEN", "").strip()
-    if not token:
-        raise SystemExit("Please set FIELDGUIDE_TOKEN environment variable.")
-
-    data = list_engagements(token)
-    print("Engagements response keys:", list(data.keys()))
+    print("Fetched Fieldguide data:")
+    print(data)
 
 
 if __name__ == "__main__":

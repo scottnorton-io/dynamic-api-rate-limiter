@@ -1,9 +1,7 @@
-"""
-Minimal Vanta usage example.
+"""Example: Using the dynamic rate limiter with the Vanta API.
 
-Set VANTA_TOKEN before running this script.
-
-The endpoint used here is illustrative; adjust path/fields to match your tenant and API version.
+NOTE: This is a placeholder example. Adjust the base URL and endpoint
+to match your actual Vanta API usage and authentication model.
 """
 
 import os
@@ -11,25 +9,25 @@ import os
 from api_ratelimiter.clients import make_client_for
 
 
-def list_assets(token: str):
+def main() -> None:
+    token = os.environ.get("VANTA_TOKEN")
+
+    if not token:
+        raise SystemExit("Please set VANTA_TOKEN environment variable.")
+
     vanta = make_client_for("vanta")
 
     headers = {
         "Authorization": f"Bearer {token}",
     }
 
-    resp = vanta.request("GET", "/v1/assets", headers=headers)
+    # Replace `/some-endpoint` with a real Vanta API path you use regularly.
+    resp = vanta.request("GET", "/some-endpoint", headers=headers)
     resp.raise_for_status()
-    return resp.json()
+    data = resp.json()
 
-
-def main():
-    token = os.environ.get("VANTA_TOKEN", "").strip()
-    if not token:
-        raise SystemExit("Please set VANTA_TOKEN environment variable.")
-
-    data = list_assets(token)
-    print("Assets response keys:", list(data.keys()))
+    print("Fetched Vanta data:")
+    print(data)
 
 
 if __name__ == "__main__":
