@@ -117,3 +117,43 @@ Any response with status code in that set will:
 
 - Trigger `on_429()` with optional `Retry-After`.
 - Decrease the rate and set cooldown as needed.
+
+---
+
+## Airtable and Zapier
+
+You can also use the same pattern for Airtable and Zapier:
+
+```python
+from api_ratelimiter import make_client_for
+
+airtable = make_client_for("airtable")
+zapier = make_client_for("zapier")
+```
+
+- **Airtable**: use `base_url` + `/{base_id}/{table_name}` paths and an `Authorization` header.
+- **Zapier**: configure a Catch Hook URL and pass only the path portion via `ZAPIER_HOOK_PATH`.
+
+---
+
+## Slack, GitHub, and OpenAI
+
+The same pattern works for additional integrations commonly used in automation
+and compliance tooling:
+
+```python
+from api_ratelimiter import make_client_for
+
+slack = make_client_for("slack")
+github = make_client_for("github")
+openai_client = make_client_for("openai")
+```
+
+- **Slack**: Use the Web API base (`https://slack.com/api`) and pass an OAuth
+  token in the `Authorization` header.
+- **GitHub**: Use `GITHUB_TOKEN` and call the REST API (e.g. `/user/repos`).
+- **OpenAI**: Use `OPENAI_API_KEY` and standard HTTP requests to
+  `https://api.openai.com/v1` endpoints (e.g. `/chat/completions`).
+
+The dynamic limiter will adapt to each provider's behavior independently,
+making it easier to mix these APIs in a single workflow.

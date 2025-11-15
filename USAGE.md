@@ -493,3 +493,86 @@ resp.raise_for_status()
 
 This is especially useful in automation or ETL-style jobs where you may trigger
 a large number of Zaps in sequence.
+
+---
+
+# 22. Slack, GitHub, and OpenAI Patterns
+
+## Slack
+
+Slack's Web API is a common target for automation hooks and notifications.
+
+```python
+import os
+from api_ratelimiter import make_client_for
+
+slack = make_client_for("slack")
+
+token = os.environ["SLACK_BOT_TOKEN"]
+channel = os.environ["SLACK_CHANNEL_ID"]
+
+headers = {
+    "Authorization": f"Bearer {token}",
+    "Content-Type": "application/json; charset=utf-8",
+}
+payload = {"channel": channel, "text": "Hello from dynamic-api-rate-limiter!"}
+
+resp = slack.request("POST", "/chat.postMessage", headers=headers, json=payload)
+resp.raise_for_status()
+```
+
+## GitHub
+
+GitHub is often part of compliance and automation flows (evidence collection,
+repo scans, etc.).
+
+```python
+import os
+from api_ratelimiter import make_client_for
+
+github = make_client_for("github")
+
+token = os.environ["GITHUB_TOKEN"]
+org = os.environ.get("GITHUB_ORG")
+path = f"/orgs/{org}/repos" if org else "/user/repos"
+
+headers = {
+    "Authorization": f"Bearer {token}",
+    "Accept": "application/vnd.github+json",
+}
+
+resp = github.request("GET", path, headers=headers)
+resp.raise_for_status()
+repos = resp.json()
+```
+
+## OpenAI
+
+For AI-backed workflows (summarization, drafting, analysis, etc.), you can use
+the same rate-limited client with the OpenAI HTTP API:
+
+```python
+import os
+from api_ratelimiter import make_client_for
+
+openai_client = make_client_for("openai")
+
+api_key = os.environ["OPENAI_API_KEY"]
+model = os.environ.get("OPENAI_MODEL", "gpt-4.1-mini")
+
+headers = {
+    "Authorization": f"Bearer {api_key}",
+    "Content-Type": "application/json",
+}
+payload = {
+    "model": model,
+    "messages": [{"role": "user", "content": "Say hello from the rate limiter."}],
+}
+
+resp = openai_client.request("POST", "/chat/completions", headers=headers, json=payload)
+resp.raise_for_status()
+data = resp.json()
+```
+
+The dynamic limiter will adapt based on rate-limit responses from the OpenAI API,
+making it safer to run higher-throughput jobs.
