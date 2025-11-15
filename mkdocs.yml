@@ -9,8 +9,9 @@ theme:
 
 nav:
   - Home: index.md
-  - Getting Started: getting-started.md
+  - Getting started: getting-started.md
   - Usage: usage.md
+  - Enterprise: enterprise-usage.md
   - Integrations: integrations.md
   - Configuration & Overrides: configuration.md
   - Deployment Patterns: deployment.md
