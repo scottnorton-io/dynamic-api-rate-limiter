@@ -1,3 +1,7 @@
+[![CI](https://github.com/scottnorton-io/dynamic-api-rate-limiter/actions/workflows/ci.yml/badge.svg)](https://github.com/scottnorton-io/dynamic-api-rate-limiter/actions/workflows/ci.yml)
+[![Docs](https://github.com/scottnorton-io/dynamic-api-rate-limiter/actions/workflows/docs.yml/badge.svg)](https://github.com/scottnorton-io/dynamic-api-rate-limiter/actions/workflows/docs.yml)
+[![PyPI](https://img.shields.io/pypi/v/dynamic-api-rate-limiter.svg)](https://pypi.org/project/dynamic-api-rate-limiter/)
+
 # API Rate Limiter – Dynamic, Self-Tuning, 429-Aware Python Client
 
 ### Developed by Scott Norton • https://github.com/scottnorton-io/
